@@ -10,13 +10,12 @@ public abstract class BaseMotor : MonoBehaviour
 	[SerializeField]
 	private float baseSpeed = 5.0f;
 	private float baseGravity = 10f;
-	private float baseJumpingStrengh = 250f;
+	private float baseJumpingStrengh = 250;
 	protected CharacterController characterController;
 	protected Transform thisTransform;
 	protected Animator characterAC;
 	protected Vector3 moveVector;
 	protected BaseState state;
-
 
 	public float Gravity { get { return baseGravity; } }
 	public float VerticalSpeed { get; set; }

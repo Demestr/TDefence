@@ -6,11 +6,10 @@ using UnityEngine;
 public class PlayerMotor : BaseMotor
 {
 
-	protected override void Start()
+    protected override void Start()
 	{
 		base.Start();
-
-		ChangeState("WalkingState");
+        ChangeState("WalkingState");
 	}
 
 	protected override void Update()
@@ -32,10 +31,10 @@ public class PlayerMotor : BaseMotor
 	{
 		Vector3 input = Vector3.zero;
 
-		input.x = Input.GetAxis("Horizontal");
-		input.z = Input.GetAxis("Vertical");
-		input = input.magnitude > 1 ? input.normalized : input;
 
+		input = transform.TransformVector(Vector3.forward) * Input.GetAxis("Vertical");
+		input += transform.TransformVector(Vector3.right) * Input.GetAxis("Horizontal");
+		input = input.magnitude > 1 ? input.normalized : input;
 		return input;
 	}
 }

@@ -7,20 +7,31 @@ public class SmoothCamera : MonoBehaviour
 	[SerializeField]
 	private Transform target;
 
-	[SerializeField]
-	private bool isAutoConfigured = true;
+    protected BaseCameraState state;
+    protected Camera mainCamera;
 
-	[SerializeField]
-	private Vector3 offset;
-
-	private void Start()
+    private void Start()
 	{
-		if(isAutoConfigured)
-		offset = transform.position - target.position;
+        mainCamera = GetComponent<Camera>();
+
+        ChangeState("FirstPersonCameraState");
 	}
 
-	private void LateUpdate()
-	{
-		transform.position = target.position + offset;
-	}
+    private void Update()
+    {
+        state.CameraMove();
+        state.Transition();
+    }
+
+    public void ChangeState(string stateName)
+    {
+        if (state != null)
+            state.Destuct();
+
+
+        System.Type type = System.Type.GetType(stateName);
+        state = gameObject.AddComponent(type) as BaseCameraState;
+
+        state.Construct();
+    }
 }
